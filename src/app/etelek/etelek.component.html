@@ -1,1 +1,20 @@
-<p>etelek works!</p>
+<div class="row">
+    <div *ngFor="let oszlop of oszlopok" class="col">
+        {{oszlop}}
+    </div>
+    <div class="col">
+        Műveletek
+    </div>
+</div>
+
+<div *ngFor="let etel of etelek" class="row my-2">
+    <div *ngFor="let oszlop of oszlopok" class="col">
+        {{etel[oszlop]}}
+    </div>
+
+    <div class="col d-grid gap-2 d-md-block">
+        <button class="mx-2 btn btn-warning" type="button">Ment</button>
+        <button (click)="onDelete(etel)" class="btn btn-danger" type="button">Töröl</button>
+      </div>
+
+</div>
