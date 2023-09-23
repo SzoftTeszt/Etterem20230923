@@ -1,6 +1,6 @@
 <div class="row">
     <div *ngFor="let oszlop of oszlopok" class="col">
-        {{oszlop}}
+        {{oszlop.text}}
     </div>
     <div class="col">
         Műveletek
@@ -9,7 +9,7 @@
 
 <div *ngFor="let etel of etelek" class="row my-2">
     <div *ngFor="let oszlop of oszlopok" class="col">
-        {{etel[oszlop]}}
+        {{etel[oszlop.key]}}
     </div>
 
     <div class="col d-grid gap-2 d-md-block">
