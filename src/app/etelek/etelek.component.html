@@ -1,3 +1,4 @@
+<ng-container *ngIf="!showError; else hiba ">
 <div class="row">
     <div *ngFor="let oszlop of oszlopok" class="col">
         {{oszlop.text}}
@@ -6,15 +7,44 @@
         Műveletek
     </div>
 </div>
+<!-- {{ujEtel|json}} -->
+<div class="row my-4">
+    <div *ngFor="let oszlop of oszlopok" class="col">
+        <ng-container [ngSwitch]="oszlop.type">
+            <input *ngSwitchCase="'text'" [(ngModel)]="ujEtel[oszlop.key]" [type]="oszlop.type" class="form-control" >
+            <input *ngSwitchCase="'number'" [(ngModel)]="ujEtel[oszlop.key]" type="number" class="form-control" >
+            <p *ngSwitchDefault>{{ujEtel[oszlop.key]}}</p>
+        </ng-container>
+    </div>
+    <div class="col d-grid gap-2 d-md-block">
+        <button (click)="onCreate()" class="mx-2 btn btn-primary" type="button">Hozzáadás</button>
+     </div>
+</div>
+
 
 <div *ngFor="let etel of etelek" class="row my-2">
     <div *ngFor="let oszlop of oszlopok" class="col">
-        {{etel[oszlop.key]}}
+
+        <ng-container [ngSwitch]="oszlop.type">
+            <input *ngSwitchCase="'text'" [(ngModel)]="etel[oszlop.key]" [type]="oszlop.type" class="form-control" >
+            <input *ngSwitchCase="'number'" [(ngModel)]="etel[oszlop.key]" type="number" class="form-control" >
+            <p *ngSwitchDefault>{{etel[oszlop.key]}}</p>
+        </ng-container>
+        
+        
+        <!-- <input [(ngModel)]="etel[oszlop.key]" type="text" class="form-control" > -->
+        <!-- {{etel[oszlop.key]}}  -->
     </div>
 
     <div class="col d-grid gap-2 d-md-block">
-        <button class="mx-2 btn btn-warning" type="button">Ment</button>
+        <button (click)="onUpdate(etel)" class="mx-2 btn btn-warning" type="button">Ment</button>
         <button (click)="onDelete(etel)" class="btn btn-danger" type="button">Töröl</button>
       </div>
 
 </div>
+</ng-container>
+<ng-template #hiba>
+    <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+</ng-template>

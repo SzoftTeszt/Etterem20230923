@@ -16,4 +16,12 @@ export class BaseService {
     console.log("Delete: ", this.serverUrl+url+'/'+id)
     return this.http.delete(this.serverUrl+url+'/'+id)
   }
+
+  onUpdate(url:string, etel:any){
+    return this.http.put(this.serverUrl+url+'/'+etel.id, etel)
+  }
+
+  onCreate(url:string, etel:any){
+    return this.http.post(this.serverUrl+url, etel)
+  }
 }

@@ -10,15 +10,29 @@ import { ConfigService } from '../config.service';
 export class EtelekComponent {
   etelek:any;
   oszlopok:any;
+  ujEtel:any={};
+
+  showError=false;
+  errorMessage="";
 
   getData(){
     this.base.getAll("etelek").subscribe(
-      adatok=>{
-        this.etelek=adatok; 
-        console.log(this.etelek)
-      }
+      {
+        next:(adatok:any)=>
+          {
+            this.etelek=adatok
+            this.showError=false
+            this.errorMessage=""
+          },
+        error:()=>{
+          this.showError=true
+          this.errorMessage="Az adatok nem állnak rendelkezésre!"
+          console.log("")
+        }
+      }      
     )
   }
+  
 
   constructor(
     private base:BaseService, 
@@ -35,5 +49,22 @@ export class EtelekComponent {
       ()=>this.getData()
     
     )
+  }
+
+  onUpdate(etel:any){
+    this.base.onUpdate("etelek",etel).subscribe(
+      ()=>this.getData()
+    )
+  }
+
+  onCreate(){
+    this.base.onCreate("etelek",this.ujEtel).subscribe(
+      (a)=>
+      { console.log("Új étel:",a);
+        this.ujEtel={}
+        this.getData()
+      }
+    )
+
   }
 }
